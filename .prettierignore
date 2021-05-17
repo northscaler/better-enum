@@ -1,0 +1,15 @@
+.gitignorerc
+.gitignore
+.idea/
+.npmrc
+.nyc_output/
+.snyk
+coverage/
+dist/
+package-lock.json
+.DS_Store
+tag-nodejs
+docs/
+rel*
+LICENSE*
+README*
