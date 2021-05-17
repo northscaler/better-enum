@@ -9,7 +9,7 @@ export default class HelloWorld extends Enumeration<HelloWorld> {
   }
 
   static values(): HelloWorld[] {
-    return _values(HelloWorld)
+    return _values<HelloWorld>(HelloWorld)
   }
 
   private constructor(name: string, ordinal: number) {

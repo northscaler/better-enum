@@ -8,6 +8,7 @@ import {
   UnidentifiableEnumerationValueError,
 } from '../../main/errors'
 import HelloWorld from './HelloWorld'
+import Planet from './Planet'
 
 const expect = chai.expect
 
@@ -117,5 +118,13 @@ describe('unit tests of Enumeration', function () {
         }
       }
     }).to.throw(InvalidEnumerationNameError)
+  })
+
+  it('should work with Planet', function () {
+    const earthWeight = 45 // kg
+    const mass = earthWeight / Planet.EARTH.surfaceGravity
+    for (const p of Planet.values().sort(sortByOrdinal)) {
+      console.log(`Your weight on ${p} is ${p.surfaceWeight(mass)}`)
+    }
   })
 })

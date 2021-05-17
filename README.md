@@ -21,7 +21,7 @@ export default class HelloWorld extends Enumeration<HelloWorld> {    // 2️⃣
   }
 
   static values(): HelloWorld[] {                                    // 5️⃣
-    return _values(HelloWorld)
+    return _values<HellowWorld>(HelloWorld)
   }
 
   private constructor(name: string, ordinal: number) {               // 6️⃣
@@ -125,7 +125,7 @@ export default class Bool extends Enumeration<Bool> {
   }
 
   static values(): Bool[] {
-    return _values(Bool)
+    return _values<Bool>(Bool)
   }
 
   private constructor(
@@ -164,3 +164,9 @@ expect(Bool.TRUE.definite).to.be.true
 expect(Bool.FALSE.definite).to.be.true
 expect(Bool.NEITHER.definite).to.be.false
 ```
+
+### Java's `Planet` enum
+We ported Java's `Planet` enum example at https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html to this library.
+It makes significant use of custom properties & methods.
+
+See it [here](./src/test/unit/Planet.ts])!

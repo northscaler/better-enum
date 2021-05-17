@@ -15,7 +15,7 @@ export default class Bool extends Enumeration<Bool> {
   }
 
   static values(): Bool[] {
-    return _values(Bool)
+    return _values<Bool>(Bool)
   }
 
   private constructor(
