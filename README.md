@@ -75,7 +75,7 @@ expect(() => HelloWorld.of(-42)).to.throw(
 
 4️⃣ Fully qualified string includes colon-separated type, `name` & `ordinal`
 
-5️⃣ `UnidentifiableEnumerationValueError` thrown on argument that can't be converted to an enum instance
+5️⃣  `UnidentifiableEnumerationValueError` thrown on argument that can't be converted to an enum instance
 
 ## Features
 
@@ -99,6 +99,11 @@ This is a static method on your enumeration class that returns all instances of 
 ### `static of()` method
 
 This is a static method on your enumeration class that returns an instance of the class given its `name` or `ordinal`.
+
+### Convenient sorting functions
+
+This package exports two convenient sorting functions, `sortByName` & `sortByOrdinal` to sort enumeration instances by
+their `name` or `ordinal`, respectively.
 
 ### Arbitrary additional properties & methods
 
@@ -166,6 +171,7 @@ expect(Bool.NEITHER.definite).to.be.false
 ```
 
 ### Java's `Planet` enum
+
 We ported Java's `Planet` enum example at https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html to this library.
 It makes significant use of custom properties & methods.
 

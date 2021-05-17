@@ -35,6 +35,8 @@ const enums = new Map<
  * > Use `import { _of } from '@northscaler/better-enum' and delegate the subclass's `of()` method to it.
  *
  * * `T` must define a `static` method `values(): T[]` that returns all instances of `T`.
+ * No ordering is prescribed.
+ * However, you can use one of the convenient sorting functions provided by this class, {@link sortByName} or {@link sortByOrdinal}, to sort the instances, or write your own.
  *
  * > NOTE: {@link Enumeration} provides a convenient function that subclasses can delegate to in order to implement the required `values` method above.
  * > Use `import { _values } from '@northscaler/better-enum' and delegate the subclass's `values()` method to it.
