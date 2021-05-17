@@ -10,10 +10,11 @@ import {
 type EnumerationsByName = { [name: string]: any }
 type EnumerationsByOrdinal = { [ordinal: number]: any }
 
-// key type is really a class function:  that is, `Foo` reference of `class Foo {}`
-const values = new Map<
-  any,
-  { name: EnumerationsByName; ordinal: EnumerationsByOrdinal }
+// key type is a class function:  that is, `Foo` reference of `class Foo {}`
+const enums = new Map<
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  Function,
+  { byName: EnumerationsByName; byOrdinal: EnumerationsByOrdinal }
 >()
 
 /**
@@ -75,17 +76,17 @@ export class Enumeration<T extends Enumeration<T>> {
       })
     }
 
-    let clazz = values.get(this._class)
+    let clazz = enums.get(this._class)
     if (!clazz) {
-      values.set(this._class, (clazz = { name: {}, ordinal: {} }))
+      enums.set(this._class, (clazz = { byName: {}, byOrdinal: {} }))
     }
-    if (clazz!.name[_name] || clazz!.ordinal[_ordinal]) {
+    if (clazz!.byName[_name] || clazz!.byOrdinal[_ordinal]) {
       throw new DuplicateEnumerationDeclarationError({
         context: { name: _name, ordinal: _ordinal },
       })
     }
 
-    clazz!.name[_name] = clazz!.ordinal[_ordinal] = (this as unknown) as T
+    clazz!.byName[_name] = clazz!.byOrdinal[_ordinal] = (this as unknown) as T
   }
 
   /**
@@ -127,6 +128,15 @@ export class Enumeration<T extends Enumeration<T>> {
   toFullyQualifiedString() {
     return `${this.constructor.name}:${this._name}:${this._ordinal}`
   }
+
+  /**
+   * Default `toJSON()` protocol method.
+   * Returns the symbolic name of this enumerated value.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
+   */
+  toJSON() {
+    return this.name()
+  }
 }
 
 /**
@@ -139,7 +149,7 @@ export class Enumeration<T extends Enumeration<T>> {
  * @param it The value being used to identify the enumerated value.
  * @param clazz A reference to the enumeration class (if `class Foo ... {}`, then the reference `Foo` should be given).
  */
-export function _of<T>(
+export function _of<T extends Enumeration<T>>(
   it: T | string | number,
   // eslint-disable-next-line @typescript-eslint/ban-types
   clazz: Function
@@ -147,15 +157,15 @@ export function _of<T>(
   let e: T
   const type = typeof it
 
-  const f = values.get(clazz)
+  const f = enums.get(clazz)
   if (!f) {
     throw new UnknownEnumerationClassError({ context: { clazz } })
   }
 
   if (type === 'string') {
-    e = f!.name[it as string]
+    e = f!.byName[it as string]
   } else if (type === 'number') {
-    e = f!.ordinal[it as number]
+    e = f!.byOrdinal[it as number]
   } else if (it instanceof clazz) {
     e = it as T
   }
@@ -173,12 +183,28 @@ export function _of<T>(
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function _values(clazz: Function) {
-  const f = values.get(clazz)
+export function _values<T extends Enumeration<T>>(clazz: Function): T[] {
+  const f = enums.get(clazz)
 
   if (!f) {
     throw new UnknownEnumerationClassError({ context: { clazz } })
   }
 
-  return Object.values(f.name)
+  return Object.values(f.byName)
 }
+
+/**
+ * Returns a convenient function to sort enumerations by their names.
+ */
+export const sortByName = <T extends Enumeration<T>>(
+  a: Enumeration<T>,
+  b: Enumeration<T>
+) => a.name().localeCompare(b.name())
+
+/**
+ * Returns a convenient function to sort enumerations by their ordinals.
+ */
+export const sortByOrdinal = <T extends Enumeration<T>>(
+  a: Enumeration<T>,
+  b: Enumeration<T>
+) => a.ordinal() - b.ordinal()

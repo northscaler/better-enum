@@ -1,6 +1,6 @@
 import * as chai from 'chai'
 import Bool from './Bool'
-import { Enumeration } from '../../main'
+import { Enumeration, sortByName, sortByOrdinal } from '../../main'
 import {
   DuplicateEnumerationDeclarationError,
   InvalidEnumerationNameError,
@@ -35,6 +35,14 @@ describe('unit tests of Enumeration', function () {
     )
     expect(() => HelloWorld.of(-42)).to.throw(
       UnidentifiableEnumerationValueError
+    )
+    expect(JSON.stringify(Bool.TRUE)).to.equal('"TRUE"')
+
+    expect(JSON.stringify(Bool.values().sort(sortByName))).to.equal(
+      '["FALSE","NEITHER","TRUE"]'
+    )
+    expect(JSON.stringify(Bool.values().sort(sortByOrdinal))).to.deep.equal(
+      '["NEITHER","FALSE","TRUE"]'
     )
   })
 
