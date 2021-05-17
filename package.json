@@ -66,8 +66,8 @@
     ]
   },
   "dependencies": {
-    "lodash.snakecase": "4.1.1",
-    "@northscaler/better-error": "0.1.0-dev.4"
+    "@northscaler/better-error": "0.1.0-dev.5",
+    "lodash.snakecase": "4.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",

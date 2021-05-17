@@ -80,18 +80,28 @@ expect(() => HelloWorld.of(-42)).to.throw(
 ## Features
 
 ### `name()` instance method
+
 This is an instance method that returns the instances `name`.
 
 ### `ordinal()` instance method
+
 This is an instance method that returns the instance's `ordinal`.
 
+### `toJSON()` instance method
+
+This is an instance method to return the enum as an object suitable for JSON stringification. It simply returns
+the `name` of this instance.
+
 ### `static values()` method
+
 This is a static method on your enumeration class that returns all instances of the class.
 
 ### `static of()` method
+
 This is a static method on your enumeration class that returns an instance of the class given its `name` or `ordinal`.
 
 ### Arbitrary additional properties & methods
+
 Your enumeration class can define any additional properties or methods that you'd like.
 
 Here's an example of a tri-state boolean (true, false or neither) with additional property `definite` and `toBoolean()`.

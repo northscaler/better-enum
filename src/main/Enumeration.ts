@@ -1,6 +1,7 @@
 import isValidJavaScriptIdentifier from './is-valid-javascript-identifier'
 import {
   DuplicateEnumerationDeclarationError,
+  IllegallyExtendedEnumerationError,
   InvalidEnumerationNameError,
   InvalidEnumerationOrdinalError,
   UnidentifiableEnumerationValueError,
@@ -10,7 +11,7 @@ import {
 type EnumerationsByName = { [name: string]: any }
 type EnumerationsByOrdinal = { [ordinal: number]: any }
 
-// key type is a class function:  that is, `Foo` reference of `class Foo {}`
+// key type is a class function; that is, given `class Foo {}`, then symbol `Foo`
 const enums = new Map<
   // eslint-disable-next-line @typescript-eslint/ban-types
   Function,
@@ -18,7 +19,7 @@ const enums = new Map<
 >()
 
 /**
- * Base enumeration class for the pattern where enumerated values are better represented by instance of classes rather than scalar values.
+ * Base enumeration class for the pattern where enumerated values are represented by instances of classes rather than by scalar string or numeric values alone.
  *
  * Every subclass `T` has the following requirements.
  *
@@ -31,12 +32,12 @@ const enums = new Map<
  * * `T` must define a `static` method `of(it: T | string | number): T` that returns an instance of `T` whose `name` or `ordinal` is equal to the given value, or that is identical to the instance of `T` given, and must throw {@link UnidentifiableEnumerationValueError} otherwise.
  *
  * > NOTE: {@link Enumeration} provides a convenient function that subclasses can delegate to in order to implement the required `of` method above.
- * > Use `import { _of } from '@northscaler/better-enum' and delegate your `of` method to it.
+ * > Use `import { _of } from '@northscaler/better-enum' and delegate the subclass's `of()` method to it.
  *
  * * `T` must define a `static` method `values(): T[]` that returns all instances of `T`.
  *
  * > NOTE: {@link Enumeration} provides a convenient function that subclasses can delegate to in order to implement the required `values` method above.
- * > Use `import { _values } from '@northscaler/better-enum' and delegate your `values` method to it.
+ * > Use `import { _values } from '@northscaler/better-enum' and delegate the subclass's `values()` method to it.
  */
 export class Enumeration<T extends Enumeration<T>> {
   /**
@@ -62,7 +63,7 @@ export class Enumeration<T extends Enumeration<T>> {
       Object.getPrototypeOf(Object.getPrototypeOf(this)).constructor.name !==
       Enumeration.name
     ) {
-      throw new Error('farts')
+      throw new IllegallyExtendedEnumerationError({ context: { this_: this } })
     }
 
     if (!isValidJavaScriptIdentifier(_name)) {
@@ -76,17 +77,17 @@ export class Enumeration<T extends Enumeration<T>> {
       })
     }
 
-    let clazz = enums.get(this._class)
-    if (!clazz) {
-      enums.set(this._class, (clazz = { byName: {}, byOrdinal: {} }))
+    let class_ = enums.get(this._class)
+    if (!class_) {
+      enums.set(this._class, (class_ = { byName: {}, byOrdinal: {} }))
     }
-    if (clazz!.byName[_name] || clazz!.byOrdinal[_ordinal]) {
+    if (class_!.byName[_name] || class_!.byOrdinal[_ordinal]) {
       throw new DuplicateEnumerationDeclarationError({
         context: { name: _name, ordinal: _ordinal },
       })
     }
 
-    clazz!.byName[_name] = clazz!.byOrdinal[_ordinal] = (this as unknown) as T
+    class_!.byName[_name] = class_!.byOrdinal[_ordinal] = (this as unknown) as T
   }
 
   /**
@@ -133,6 +134,8 @@ export class Enumeration<T extends Enumeration<T>> {
    * Default `toJSON()` protocol method.
    * Returns the symbolic name of this enumerated value.
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
+   *
+   * To implement a JSON [`reviver`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#using_the_reviver_parameter), use the static `of` method defined on your class.
    */
   toJSON() {
     return this.name()
