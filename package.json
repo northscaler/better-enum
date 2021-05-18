@@ -30,6 +30,7 @@
     "lic": "node lic.js > LICENSE"
   },
   "main": "dist/main/index.js",
+  "license": "MIT",
   "keywords": [
     "enum",
     "enums",
