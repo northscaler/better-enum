@@ -179,4 +179,4 @@ expect(Bool.NEITHER.definite).to.be.false
 We ported Java's `Planet` enum example at https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html to this library.
 It makes significant use of custom properties & methods.
 
-See it [here](./src/test/unit/Planet.ts])!
+See the [enum class](https://gitlab.com/northscaler-public/better-enum/-/blob/dev/src/test/unit/Planet.ts) and its [test](https://gitlab.com/northscaler-public/better-enum/-/blob/dev/src/test/unit/Enumeration.spec.ts#L123) if you're curious.
