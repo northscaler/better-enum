@@ -121,7 +121,7 @@ describe('unit tests of Enumeration', function () {
   })
 
   it('should work with Planet', function () {
-    const earthWeight = 45 // kg
+    const earthWeight = 175 // kg
     const mass = earthWeight / Planet.EARTH.surfaceGravity
     for (const p of Planet.values().sort(sortByOrdinal)) {
       console.log(`Your weight on ${p} is ${p.surfaceWeight(mass)}`)
