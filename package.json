@@ -37,6 +37,14 @@
   "publishConfig": {
     "access": "public"
   },
+  "homepage": "https://gitlab.com/northscaler-public/better-enum",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/northscaler-public/better-enum"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/northscaler-public/better-enum/-/issues"
+  },
   "nyc": {
     "include": [
       "src/main/**/*.ts"
