@@ -1,0 +1,16 @@
+<templateSet group="@northscaler/better-enum">
+    <template name="nsenumclass-ts" value="import { _of, _values, Enumeration } from '@northscaler/better-enum'&#10;&#10;let ordinal = 0&#10;&#10;export default class $ClassName$ extends Enumeration&lt;$ClassName$&gt; {&#10;  static readonly $EnumName$ = new $ClassName$('$EnumName$', ordinal++$END$)&#10;&#10;  static of(it: $ClassName$ | string | number): $ClassName$ {&#10;    return _of(it, $ClassName$)&#10;  }&#10;&#10;  static values(): $ClassName$[] {&#10;    return _values&lt;$ClassName$&gt;($ClassName$)&#10;  }&#10;&#10;  private constructor(name: string, ordinal: number) {&#10;    super(name, ordinal, $ClassName$)&#10;  }&#10;}&#10;" description="Northscaler enumeration class template" toReformat="true" toShortenFQNames="true">
+        <variable name="ClassName" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="true" />
+        <variable name="EnumName" expression="" defaultValue="THING" alwaysStopAt="true" />
+        <context>
+            <option name="TS_TOP_LEVEL_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="nsenumval-ts" value="static readonly $EnumName$ = new $ClassName$('$EnumName$', ordinal++$END$)" description="Northscaler enumeration class value" toReformat="true" toShortenFQNames="true">
+        <variable name="ClassName" expression="jsClassName()" defaultValue="" alwaysStopAt="true" />
+        <variable name="EnumName" expression="" defaultValue="THING" alwaysStopAt="true" />
+        <context>
+            <option name="TS_CLASS" value="true" />
+        </context>
+    </template>
+</templateSet>

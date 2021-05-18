@@ -77,6 +77,10 @@ expect(() => HelloWorld.of(-42)).to.throw(
 
 5️⃣  `UnidentifiableEnumerationValueError` thrown on argument that can't be converted to an enum instance
 
+> NOTE: There are helpful IDE-specific templates to assist you in following the patterns prescribed by this library.
+> See ./src/templates for more information.
+> If you don't see templates for your IDE, please submit a pull/merge request.
+
 ## Features
 
 ### `name()` instance method
