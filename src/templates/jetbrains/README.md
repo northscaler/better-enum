@@ -20,7 +20,7 @@ your [JetBrains IDE configuration directory](https://www.jetbrains.com/help/idea
 For example, for WebStorm 2021.1 on macOS Big Sur:
 
 ```shell
-cp *.xml ~/Library/Application Support/JetBrains/WebStorm2021.1/jba_config/templates
+cp *.xml ~/Library/Application\ Support/JetBrains/WebStorm2021.1/jba_config/templates
 ```
 
 There may be slight differences on your machine depending on OS, JetBrains product & versions thereof.
