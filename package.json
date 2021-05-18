@@ -31,8 +31,10 @@
   },
   "main": "dist/main/index.js",
   "keywords": [
-    "error",
-    "errors"
+    "enum",
+    "enums",
+    "enumeration",
+    "enumerations"
   ],
   "publishConfig": {
     "access": "public"
