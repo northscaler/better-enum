@@ -1,8 +1,8 @@
 import {
   IllegalArgumentError,
   IllegalStateError,
-} from '@northscaler/better-error/dist/main/errors'
-import { BetterErrorConstructorArg } from '@northscaler/better-error/dist/main/errors/BetterError'
+  BetterErrorConstructorArg,
+} from '@northscaler/better-error'
 
 export class DuplicateEnumerationDeclarationError extends IllegalArgumentError {
   constructor(arg?: BetterErrorConstructorArg) {

@@ -77,7 +77,7 @@
     ]
   },
   "dependencies": {
-    "@northscaler/better-error": "0.1.0-dev.5",
+    "@northscaler/better-error": "0.1.0-dev.10",
     "lodash.snakecase": "4.1.1"
   },
   "devDependencies": {

@@ -7,8 +7,8 @@
         </context>
     </template>
     <template name="nsenumval-ts" value="static readonly $EnumName$ = new $ClassName$('$EnumName$', ordinal++$END$)" description="Northscaler enumeration class value" toReformat="true" toShortenFQNames="true">
-        <variable name="ClassName" expression="jsClassName()" defaultValue="" alwaysStopAt="true" />
         <variable name="EnumName" expression="" defaultValue="THING" alwaysStopAt="true" />
+        <variable name="ClassName" expression="jsClassName()" defaultValue="" alwaysStopAt="true" />
         <context>
             <option name="TS_CLASS" value="true" />
         </context>
